@@ -36,11 +36,23 @@ class User(BaseModel):
 
     def is_valid_password(self, pwd):
         """ checks if the password is valid """
-        if type(pwd) is not str or self._password is None:
+        if not isinstance(pwd, str) or self._password is None:
             return False
         pwd = hashlib.md5(bytes(pwd, encoding='utf8')).hexdigest()
         return pwd == self._password
-        
+
+    def to_dict(self):
+        """ returns a json string of the user object """
+        return {
+                    'id': str(self.id),
+                    'email': str(self.email),
+                    'first_name': str(self.first_name),
+                    'last_name': str(self.last_name),
+                    'created_at': self.created_at.strftime("%Y-%m-%d "
+                                                           "%H:%M:%S"),
+                    'updated_at': self.updated_at.strftime("%Y-%m-%d "
+                                                           "%H:%M:%S")
+                }
 
     @property
     def password(self):

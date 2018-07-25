@@ -115,7 +115,32 @@ class TestUserModel(unittest.TestCase):
         self.assertFalse(self.user.is_valid_password('bogdanoff'))
         self.assertFalse(self.user.is_valid_password(None))
         self.assertFalse(self.user.is_valid_password(98))
+        self.assertFalse(self.user.is_valid_password({'pass': 'word'}))
 
+    def test_to_dict(self):
+        """ test to_dict() method """
+        test_emails = ["hbtn@hbtn.com", 3, True, None, {'e': 1}, (2,)]
+        test_passwords = ["toto1234", 12, None, True, {'pass': 1}, (3,)]
+        test_names = ["Bob", 15, None, True, {False: True}, (31,)]
+        test_lastnames = ["Ross", 15, None, True, {False: True}, (12,)]
+        for i in range(len(test_emails)):
+            self.user.email = test_emails[i]
+            self.user.password = test_passwords[i]
+            self.user.first_name = test_names[i]
+            self.user.last_name = test_lastnames[i]
+            d = self.user.to_dict()
+            for key, val in d.items():
+                self.assertIsInstance(val, str)
+
+    def test_to_dict_date(self):
+        """ test that dates are formatted correctly """
+        d = self.user.to_dict()
+        test_date = [d['updated_at'], d['created_at']]
+        try:
+            datetime.strptime(test_date[0], '%Y-%m-%d %H:%M:%S')
+            datetime.strptime(test_date[1], '%Y-%m-%d %H:%M:%S')
+        except:
+            self.fail('Datetime Incorrect')
 
 if __name__ == '__main__':
     unittest.main()
