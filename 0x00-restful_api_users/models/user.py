@@ -4,15 +4,17 @@
 module containing User class
 """
 import hashlib
-from models.base_model import BaseModel
+from models.base_model import Base, BaseModel
+from sqlalchemy import Column, Integer, String
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
     """ user model """
-    email = None
-    first_name = None
-    last_name = None
-    _password = None
+    email = Column(String(128), nullable=False)
+    first_name = Column(String(128), nullable=True)
+    last_name = Column(String(128), nullable=True)
+    _password = Column(String(128), nullable=False)
+    __tablename__ = 'users'
 
     def display_name(self):
         """ displays user info """
