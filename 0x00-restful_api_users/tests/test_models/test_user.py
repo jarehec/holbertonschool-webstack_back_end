@@ -128,9 +128,13 @@ class TestUserModel(unittest.TestCase):
             self.user.first_name = test_names[i]
             self.user.last_name = test_lastnames[i]
             d = self.user.to_dict()
+            self.assertIsNotNone(d.get('id'))
+            self.assertIsNotNone(d.get('email'))
+            self.assertIsNotNone(d.get('first_name'))
+            self.assertIsNotNone(d.get('last_name'))
             for key, val in d.items():
-                self.assertIsInstance(val, str)
                 self.assertIsNotNone(val)
+                self.assertIsInstance(val, str)
 
     def test_to_dict_date(self):
         """ test that dates are formatted correctly """
