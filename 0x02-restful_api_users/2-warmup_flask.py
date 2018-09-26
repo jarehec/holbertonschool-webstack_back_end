@@ -2,8 +2,8 @@
 """
 basic flask application
 """
-import os
 from flask import Flask
+import os
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
