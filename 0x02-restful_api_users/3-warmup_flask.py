@@ -18,4 +18,4 @@ def index():
     return jsonify(json)
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=int(port))

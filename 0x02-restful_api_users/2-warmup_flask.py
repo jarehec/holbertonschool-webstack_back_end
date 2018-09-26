@@ -11,16 +11,16 @@ host = os.getenv('HBNB_API_HOST')
 port = os.getenv('HBNB_API_PORT')
 
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def index():
     """ / route method """
     return 'Holberton School'
 
 
-@app.route('/c', methods=['GET'])
+@app.route('/c')
 def c():
     """ /c route method """
     return 'C is fun!'
 
 if __name__ == '__main__':
-    app.run(host=host, port=port)
+    app.run(host=host, port=int(port))

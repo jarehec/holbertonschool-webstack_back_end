@@ -3,8 +3,8 @@
 module containing flask app
 """
 import os
+from api.v1.views import app_views
 from flask import Flask, jsonify
-from .views import app_views
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -19,4 +19,4 @@ def page_not_found(e):
     return jsonify({'error': 'Not found'}), 404
 
 if __name__ == '__main__':
-    app.run(host=host, port=port)
+    app.run(host=host, port=int(port))
