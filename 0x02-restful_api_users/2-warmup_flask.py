@@ -6,18 +6,17 @@ import os
 from flask import Flask
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 host = os.getenv('HBNB_API_HOST')
 port = os.getenv('HBNB_API_PORT')
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', strict_slashes = False)
 def index():
     """ / route method """
     return 'Holberton School'
 
 
-@app.route('/c', methods=['GET'])
+@app.route('/c', strict_slashes = False)
 def c():
     """ /c route method """
     return 'C is fun!'
