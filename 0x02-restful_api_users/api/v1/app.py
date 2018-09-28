@@ -17,6 +17,7 @@ port = os.getenv('HBNB_API_PORT')
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """ 404 page handler """
     return jsonify({'error': 'Not found'}), 404
 
 
