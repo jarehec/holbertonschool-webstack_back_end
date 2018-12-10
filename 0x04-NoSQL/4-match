@@ -1,0 +1,2 @@
+// queries documents from the school collection
+db.getCollection("school").find({"name":"Holberton school"})
