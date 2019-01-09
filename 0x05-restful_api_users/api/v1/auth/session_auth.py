@@ -4,6 +4,9 @@ module containing SessionAuth class
 """
 import uuid
 from .auth import Auth
+from models import db_session
+from models.user import User
+
 
 class SessionAuth(Auth):
     """ SessionAuth class """
@@ -16,3 +19,19 @@ class SessionAuth(Auth):
         sess_id = str(uuid.uuid4())
         self.user_id_by_session_id[sess_id] = user_id
         return sess_id
+
+    def user_id_for_session_id(self, session_id=None):
+        """ returns a User id based on session id """
+        if type(session_id) is not str:
+            return None
+        return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """ returns a User instance based on a cookie value """
+        try:
+            cookie = self.session_cookie(request)
+            uid = self.user_id_for_session_id(cookie)
+            user = db_session.query(User).filter(User.id == uid).one()
+            return user
+        except:
+            return None
