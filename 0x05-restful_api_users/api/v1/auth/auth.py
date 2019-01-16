@@ -30,4 +30,7 @@ class Auth():
         """ returns the cookie value from a request """
         if request is None:
             return None
-        return request.cookies.get(os.getenv('HBNB_YELP_SESSION_NAME'))
+        try:
+            return request.cookies.get(os.getenv('HBNB_YELP_SESSION_NAME'))
+        except:
+            return None

@@ -21,7 +21,8 @@ def get_one_user(user_id):
         if user_id == 'me' and request.current_user is None:
             abort(404)
         elif user_id == 'me' and request.current_user:
-            user = db_session.query(User).filter(User.id == request.current_user.id).one()
+            user = db_session.query(User).filter(
+                                    User.id == request.current_user.id).one()
         else:
             user = db_session.query(User).filter(User.id == user_id).one()
         return jsonify(user.to_dict())

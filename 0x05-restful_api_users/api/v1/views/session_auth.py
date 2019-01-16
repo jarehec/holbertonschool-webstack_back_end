@@ -27,5 +27,3 @@ def login():
         return user.to_dict()
     except:
         return jsonify({'error': 'no user found for this email'}), 404
- 
-
