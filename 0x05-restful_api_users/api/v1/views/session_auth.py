@@ -27,3 +27,12 @@ def login():
         return user.to_dict()
     except:
         return jsonify({'error': 'no user found for this email'}), 404
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    """ logout route """
+    if auth.destroy_session(request):
+        return jsonify({}), 200
+    abort(404)
