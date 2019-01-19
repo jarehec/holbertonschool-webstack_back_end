@@ -2,6 +2,7 @@
 """
 session auth view
 """
+import os
 from api.v1.app import auth
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -23,8 +24,11 @@ def login():
         user = db_session.query(User).filter(User.email == email).one()
         if not user.is_valid_password(password):
             return jsonify({'error': 'wrong password'}), 401
-        auth.create_session(user.id)
-        return user.to_dict()
+        user = user.to_dict()
+        sess_id = auth.create_session(user['id'])
+        out = jsonify(user)
+        out.set_cookie(os.getenv('HBNB_YELP_SESSION_NAME'), sess_id)
+        return out, 200
     except:
         return jsonify({'error': 'no user found for this email'}), 404
 
@@ -33,6 +37,6 @@ def login():
                  strict_slashes=False)
 def logout():
     """ logout route """
-    if auth.destroy_session(request):
+    if auth.destroy_session(request) is True:
         return jsonify({}), 200
     abort(404)

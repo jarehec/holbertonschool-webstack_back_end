@@ -23,14 +23,11 @@ class Auth():
         return request.headers['Authorization']
 
     def current_user(self, request=None):
-        """ TODO returns None """
+        """ TODO returns None"""
         return None
 
     def session_cookie(self, request=None):
         """ returns the cookie value from a request """
         if request is None:
             return None
-        try:
-            return request.cookies.get(os.getenv('HBNB_YELP_SESSION_NAME'))
-        except:
-            return None
+        return request.cookies.get(os.getenv('HBNB_YELP_SESSION_NAME'))
