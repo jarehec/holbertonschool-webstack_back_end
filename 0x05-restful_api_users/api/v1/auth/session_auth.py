@@ -40,15 +40,13 @@ class SessionAuth(Auth):
         """ removes a session """
         try:
             sess_id = self.session_cookie(request)
-            print(sess_id)
             if sess_id is None:
                 return False
 
             uid = self.user_id_for_session_id(sess_id)
-            print(uid)
             if uid is None:
                 return False
-            del self.user_id_by_session_id[sess_id]
+            self.user_id_by_session_id.pop(sess_id)
             return True
         except:
             return False
