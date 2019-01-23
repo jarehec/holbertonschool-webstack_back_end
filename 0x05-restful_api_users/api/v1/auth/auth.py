@@ -3,7 +3,7 @@
 module containing Auth class
 """
 import os
-from flask import request
+from flask import jsonify, request
 
 
 class Auth():
@@ -29,5 +29,7 @@ class Auth():
     def session_cookie(self, request=None):
         """ returns the cookie value from a request """
         if request is None:
+            return None
+        if os.getenv('HBNB_YELP_SESSION_NAME') is None:
             return None
         return request.cookies.get(os.getenv('HBNB_YELP_SESSION_NAME'))

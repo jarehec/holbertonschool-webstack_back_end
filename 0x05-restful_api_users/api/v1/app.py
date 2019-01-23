@@ -6,13 +6,9 @@ import os
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 from api.v1.auth.session_auth import SessionAuth
-from api.v1.views import app_views
 from flask import abort, Flask, jsonify, request
 from models import db_session
 
-app = Flask(__name__)
-app.url_map.strict_slashes = False
-app.register_blueprint(app_views)
 
 if os.getenv('HBNB_YELP_AUTH') == 'basic_auth':
     auth = BasicAuth()
@@ -21,6 +17,10 @@ elif os.getenv('HBNB_YELP_AUTH') == 'session_auth':
 else:
     auth = Auth()
 
+from api.v1.views import app_views  # noqa
+app = Flask(__name__)
+app.url_map.strict_slashes = False
+app.register_blueprint(app_views)
 host = os.getenv('HBNB_API_HOST')
 port = os.getenv('HBNB_API_PORT')
 
