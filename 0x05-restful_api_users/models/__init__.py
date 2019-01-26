@@ -6,6 +6,7 @@ module containing database config
 import os
 from models.base_model import Base, BaseModel
 from models.user import User
+from models.user_session import UserSession
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import scoped_session, sessionmaker
